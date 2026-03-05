@@ -1,14 +1,64 @@
-<html>
-<title>Address Bar spoofing Brave</title>
-<h1> This is Fakebook </h1>
-<form>
-Email: <input type="text" name="username" placeholder="add email"><br>
-Password: <input type="text" name="password" placeholder="pass">
-<script>
-function f()
-{
-location = "https://facebook.com"
-}
-setInterval("f()", 13);
-</script>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Cyber Security</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0a0a0a; color: #e0e0e0; margin: 0; }
+    header { background: #111; padding: 20px; text-align: center; }
+    header h1 { color: #00ffcc; }
+    nav a { margin: 0 15px; color: #00ffcc; text-decoration: none; }
+    section { padding: 40px; }
+    .skills, .projects { display: flex; gap: 20px; flex-wrap: wrap; }
+    .card { background: #1a1a1a; padding: 20px; border-radius: 8px; flex: 1; }
+    footer { background: #111; text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Portofolio Cyber Security</h1>
+    <nav>
+      <a href="#about">Tentang</a>
+      <a href="#skills">Keahlian</a>
+      <a href="#projects">Proyek</a>
+      <a href="#contact">Kontak</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <h2>Tentang Saya</h2>
+    <p>Saya seorang spesialis keamanan siber dengan pengalaman dalam penetration testing, network security, dan incident response.</p>
+  </section>
+
+  <section id="skills">
+    <h2>Keahlian</h2>
+    <div class="skills">
+      <div class="card">Penetration Testing</div>
+      <div class="card">Network Security</div>
+      <div class="card">Incident Response</div>
+      <div class="card">Cryptography</div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Proyek</h2>
+    <div class="projects">
+      <div class="card">Audit Keamanan Website</div>
+      <div class="card">Simulasi Serangan & Mitigasi</div>
+      <div class="card">Tools Security Script</div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Kontak</h2>
+    <p>Email: cyber.sec@example.com</p>
+    <p>LinkedIn: linkedin.com/in/cybersec</p>
+    <p>GitHub: github.com/cybersec</p>
+  </section>
+
+  <footer>
+    <p>© 2026 Portofolio Cyber Security</p>
+  </footer>
+</body>
 </html>
