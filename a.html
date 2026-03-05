@@ -4,61 +4,82 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portofolio Cyber Security</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #0a0a0a; color: #e0e0e0; margin: 0; }
-    header { background: #111; padding: 20px; text-align: center; }
-    header h1 { color: #00ffcc; }
-    nav a { margin: 0 15px; color: #00ffcc; text-decoration: none; }
-    section { padding: 40px; }
-    .skills, .projects { display: flex; gap: 20px; flex-wrap: wrap; }
-    .card { background: #1a1a1a; padding: 20px; border-radius: 8px; flex: 1; }
-    footer { background: #111; text-align: center; padding: 20px; }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <h1>Portofolio Cyber Security</h1>
-    <nav>
-      <a href="#about">Tentang</a>
-      <a href="#skills">Keahlian</a>
-      <a href="#projects">Proyek</a>
-      <a href="#contact">Kontak</a>
-    </nav>
+<body class="bg-gray-900 text-gray-200 font-sans">
+
+  <!-- Header -->
+  <header class="bg-gray-800 shadow-lg">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-6">
+      <h1 class="text-2xl font-bold text-cyan-400">Cyber Security Portfolio</h1>
+      <nav class="space-x-6">
+        <a href="#about" class="hover:text-cyan-400">Tentang</a>
+        <a href="#skills" class="hover:text-cyan-400">Keahlian</a>
+        <a href="#projects" class="hover:text-cyan-400">Proyek</a>
+        <a href="#contact" class="hover:text-cyan-400">Kontak</a>
+      </nav>
+    </div>
   </header>
 
-  <section id="about">
-    <h2>Tentang Saya</h2>
-    <p>Saya seorang spesialis keamanan siber dengan pengalaman dalam penetration testing, network security, dan incident response.</p>
+  <!-- Hero Section -->
+  <section class="text-center py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+    <h2 class="text-4xl font-extrabold text-cyan-400">Spesialis Keamanan Siber</h2>
+    <p class="mt-4 text-lg text-gray-400">Melindungi aset digital dengan strategi modern dan solusi inovatif.</p>
   </section>
 
-  <section id="skills">
-    <h2>Keahlian</h2>
-    <div class="skills">
-      <div class="card">Penetration Testing</div>
-      <div class="card">Network Security</div>
-      <div class="card">Incident Response</div>
-      <div class="card">Cryptography</div>
+  <!-- About -->
+  <section id="about" class="max-w-4xl mx-auto py-16">
+    <h3 class="text-3xl font-bold text-cyan-400 mb-6">Tentang Saya</h3>
+    <p class="text-gray-300 leading-relaxed">
+      Saya seorang profesional keamanan siber dengan pengalaman dalam penetration testing, network security, dan incident response.
+      Memiliki sertifikasi CEH dan Security+, serta passion dalam membangun sistem yang aman.
+    </p>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="bg-gray-800 py-16">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="text-3xl font-bold text-cyan-400 mb-8">Keahlian</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-cyan-400 transition">Penetration Testing</div>
+        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-cyan-400 transition">Network Security</div>
+        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-cyan-400 transition">Incident Response</div>
+        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-cyan-400 transition">Cryptography</div>
+      </div>
     </div>
   </section>
 
-  <section id="projects">
-    <h2>Proyek</h2>
-    <div class="projects">
-      <div class="card">Audit Keamanan Website</div>
-      <div class="card">Simulasi Serangan & Mitigasi</div>
-      <div class="card">Tools Security Script</div>
+  <!-- Projects -->
+  <section id="projects" class="max-w-6xl mx-auto py-16">
+    <h3 class="text-3xl font-bold text-cyan-400 mb-8">Proyek</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gray-800 p-6 rounded-lg shadow hover:scale-105 transition">
+        <h4 class="text-xl font-semibold text-cyan-300">Audit Keamanan Website</h4>
+        <p class="text-gray-400 mt-2">Analisis kerentanan dan rekomendasi mitigasi.</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-lg shadow hover:scale-105 transition">
+        <h4 class="text-xl font-semibold text-cyan-300">Simulasi Serangan & Mitigasi</h4>
+        <p class="text-gray-400 mt-2">Menguji sistem dengan skenario serangan nyata.</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-lg shadow hover:scale-105 transition">
+        <h4 class="text-xl font-semibold text-cyan-300">Security Tools Script</h4>
+        <p class="text-gray-400 mt-2">Membuat script otomatisasi untuk monitoring.</p>
+      </div>
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Kontak</h2>
-    <p>Email: cyber.sec@example.com</p>
-    <p>LinkedIn: linkedin.com/in/cybersec</p>
-    <p>GitHub: github.com/cybersec</p>
+  <!-- Contact -->
+  <section id="contact" class="bg-gray-800 py-16 text-center">
+    <h3 class="text-3xl font-bold text-cyan-400 mb-6">Kontak</h3>
+    <p>Email: <span class="text-cyan-300">cyber.sec@example.com</span></p>
+    <p>LinkedIn: <span class="text-cyan-300">linkedin.com/in/cybersec</span></p>
+    <p>GitHub: <span class="text-cyan-300">github.com/cybersec</span></p>
   </section>
 
-  <footer>
-    <p>© 2026 Portofolio Cyber Security</p>
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-center py-6 text-gray-500">
+    © 2026 Cyber Security Portfolio
   </footer>
+
 </body>
 </html>
