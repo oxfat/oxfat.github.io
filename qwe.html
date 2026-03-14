@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>google.com</title>
+</head>
+
+<body>
+  <button onclick="openPopup()">Open Permission - Blank test</button>
+
+<script>
+function openPopup() {
+  const w = window.open("about:blank");
+
+  const js = s => "javascript:" + encodeURIComponent(s);
+  /* ===== Rendering & Media (ADDED) ===== */
+  const dataUri = js(`
+    const i=document.createElement("iframe");
+    i.src="data:text/html,<h1>Data URI Rendered</h1>";
+    document.body.appendChild(i);
+  `);
+
+  const blobRender = js(`
+    const b=new Blob(["<h1>Blob Rendered</h1>"],{type:"text/html"});
+    window.open(URL.createObjectURL(b));
+  `);
+
+  const pip = js(`
+    const v=document.createElement("video");
+    v.src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+    v.controls=true;
+    document.body.appendChild(v);
+    v.play().then(()=>v.requestPictureInPicture());
+  `);
+
+  /* ===== System & UX ===== */
+  const fullscreen = js(`document.documentElement.requestFullscreen()`);
+  const wakeLock = js(`
+    navigator.wakeLock?.request("screen")
+      .then(()=>document.body.innerHTML+="<p>WakeLock granted</p>")
+      .catch(e=>document.body.innerHTML+="<p>WakeLock denied</p>");
+  `);
+  const pointerLock = js(`document.body.requestPointerLock()`);
+  const visibility = js(`
+    document.addEventListener("visibilitychange",()=>{
+      document.body.innerHTML += "<p>Visibility: "+document.visibilityState+"</p>";
+    });
+  `);
+
+  /* ===== Sensors & Media ===== */
+  const camera = js(`navigator.mediaDevices.getUserMedia({video:true})`);
+  const mic = js(`navigator.mediaDevices.getUserMedia({audio:true})`);
+  const camMic = js(`navigator.mediaDevices.getUserMedia({video:true,audio:true})`);
+  const screen = js(`navigator.mediaDevices.getDisplayMedia({video:true})`);
+  const motion = js(`DeviceMotionEvent?.requestPermission?.().then(r=>alert(r))`);
+  const vibrate = js(`navigator.vibrate([200,100,200])`);
+
+  /* ===== Location ===== */
+  const geo = js(`
+    navigator.geolocation.getCurrentPosition(p=>{
+      document.body.innerHTML += "<p>Lat:"+p.coords.latitude+" Lon:"+p.coords.longitude+"</p>";
+    });
+  `);
+
+  /* ===== Files & Storage ===== */
+  const fileUpload = js(`
+    const i=document.createElement("input");
+    i.type="file"; i.click();
+  `);
+  const folderPicker = js(`window.showDirectoryPicker?.()`);
+  const storageEstimate = js(`
+    navigator.storage.estimate().then(e=>{
+      document.body.innerHTML+="<p>Usage:"+e.usage+"</p>";
+    });
+  `);
+  const persistentStorage = js(`
+    navigator.storage.persist().then(r=>{
+      document.body.innerHTML+="<p>Persistent:"+r+"</p>";
+    });
+  `);
+
+  const autoDownload = js(`
+    const a=document.createElement("a");
+    a.href="https://example.com/test.apk";
+    a.download="test.apk";
+    a.click();
+  `);
+
+  const multiDownload = js(`
+    for(let i=0;i<3;i++){
+      const a=document.createElement("a");
+      a.href="https://example.com/test.apk";
+      a.download="test"+i+".apk";
+      a.click();
+    }
+  `);
+
+  /* ===== Hardware ===== */
+  const usb = js(`navigator.usb.requestDevice({filters:[]})`);
+  const hid = js(`navigator.hid.requestDevice({filters:[]})`);
+  const serial = js(`navigator.serial.requestPort({})`);
+  const bluetooth = js(`navigator.bluetooth.requestDevice({acceptAllDevices:true})`);
+  const midi = js(`navigator.requestMIDIAccess()`);
+
+  /* ===== Clipboard ===== */
+  const clipRead = js(`navigator.clipboard.readText().then(t=>alert(t))`);
+  const clipWrite = js(`navigator.clipboard.writeText("Clipboard test")`);
+
+  /* ===== Notifications ===== */
+  const notify = js(`
+    Notification.requestPermission().then(p=>{
+      document.body.innerHTML+="<p>Notification:"+p+"</p>";
+    });
+  `);
+
+  /* ===== Navigation / Redirect ===== */
+  const redirect = js(`location.href="https://example.com"`);
+  const popup = js(`window.open("https://example.com")`);
+
+  /* ===== Communication ===== */
+  const mailto = "mailto:test@example.com";
+  const tel = "tel:+123456789";
+  const sms = "sms:+123456789";
+
+  /* ===== Payments & Crypto ===== */
+  const payment = js(`
+    new PaymentRequest(
+      [{supportedMethods:"basic-card"}],
+      {total:{label:"Test",amount:{currency:"USD",value:"1.00"}}}
+    ).show();
+  `);
+  const ethereum = js(`alert(window.ethereum ? "Wallet found" : "No wallet")`);
+
+  /* ===== PWA / Advanced ===== */
+  const contactPicker = js(`navigator.contacts.select(["name","email"])`);
+  const backgroundSync = js(`alert("Requires Service Worker")`);
+  const orientationLock = js(`screen.orientation.lock("portrait")`);
+  const mediaSession = js(`navigator.mediaSession.metadata=new MediaMetadata({title:"Test"})`);
+  const fileSystem = js(`window.showOpenFilePicker?.()`);
+  const nativeShare = js(`navigator.share({title:"Test",url:location.href})`);
+  const clipboardItem = js(`
+    navigator.clipboard.write([
+      new ClipboardItem({"text/plain":new Blob(["Hello"])})
+    ]);
+  `);
+  const webXR = js(`navigator.xr.requestSession("immersive-vr")`);
+
+  /* ===== WebAuthn ===== */
+  const webauthn = js(`
+    (async()=>{
+      const cred = await navigator.credentials.create({
+        publicKey:{
+          challenge:crypto.getRandomValues(new Uint8Array(32)),
+          rp:{name:"Permission Lab"},
+          user:{
+            id:crypto.getRandomValues(new Uint8Array(16)),
+            name:"test@lab",
+            displayName:"Test User"
+          },
+          pubKeyCredParams:[{type:"public-key",alg:-7}]
+        }
+      });
+      document.body.innerHTML+="<p>WebAuthn OK</p>";
+    })();
+  `);
+
+  w.document.body.innerHTML = `
+    <h2>Permission Playground</h2>
+
+    <h3>System & UX</h3>
+    <a href="${dataUri}">Data URI</a><br>
+    <a href="${blobRender}">Blob Render</a><br>
+    <a href="${pip}">Picture-in-Picture</a><br>
+    <a href="${fullscreen}">Fullscreen</a><br>
+    <a href="${wakeLock}">Wake Lock</a><br>
+    <a href="${pointerLock}">Pointer Lock</a><br>
+    <a href="${visibility}">Visibility</a><br>
+
+    <h3>Sensors & Media</h3>
+    <a href="${camera}">Camera</a><br>
+    <a href="${mic}">Microphone</a><br>
+    <a href="${camMic}">Camera + Mic</a><br>
+    <a href="${screen}">Screen Share</a><br>
+    <a href="${motion}">Device Motion</a><br>
+    <a href="${vibrate}">Vibrate</a><br>
+
+    <h3>Location</h3>
+    <a href="${geo}">Geolocation</a><br>
+
+    <h3>Files & Storage</h3>
+    <a href="${fileUpload}">File Upload</a><br>
+    <a href="${folderPicker}">Folder Picker</a><br>
+    <a href="${storageEstimate}">Storage Estimate</a><br>
+    <a href="${persistentStorage}">Persistent Storage</a><br>
+    <a href="${autoDownload}">Auto Download</a><br>
+    <a href="${multiDownload}">Multiple Downloads</a><br>
+
+    <h3>Hardware</h3>
+    <a href="${usb}">USB</a><br>
+    <a href="${hid}">HID</a><br>
+    <a href="${serial}">Serial</a><br>
+    <a href="${bluetooth}">Bluetooth</a><br>
+    <a href="${midi}">MIDI</a><br>
+
+    <h3>Clipboard</h3>
+    <a href="${clipRead}">Clipboard Read</a><br>
+    <a href="${clipWrite}">Clipboard Write</a><br>
+
+    <h3>Notifications</h3>
+    <a href="${notify}">Notification</a><br>
+
+    <h3>Navigation</h3>
+    <a href="${redirect}">Redirect</a><br>
+    <a href="${popup}">Popup</a><br>
+
+    <h3>Communication</h3>
+    <a href="${mailto}">Mailto</a><br>
+    <a href="${tel}">Tel</a><br>
+    <a href="${sms}">SMS</a><br>
+
+    <h3>Payments & Crypto</h3>
+    <a href="${payment}">Payment Request</a><br>
+    <a href="${ethereum}">Ethereum Wallet</a><br>
+
+    <h3>PWA / Advanced</h3>
+    <a href="${contactPicker}">Contact Picker</a><br>
+    <a href="${orientationLock}">Orientation Lock</a><br>
+    <a href="${mediaSession}">Media Session</a><br>
+    <a href="${fileSystem}">File System Access</a><br>
+    <a href="${nativeShare}">Native Share</a><br>
+    <a href="${clipboardItem}">Clipboard Item API</a><br>
+    <a href="${webXR}">WebXR</a><br>
+
+    <hr>
+    <a href="${webauthn}"><b>WebAuthn (Passkey / Security Key)</b></a>
+  `;
+
+  w.focus();
+}
+</script>
+</body>
+</html>
