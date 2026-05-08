@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirect Web</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f172a;
+      overflow: hidden;
+    }
+
+    .main-btn {
+      padding: 16px 40px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+    }
+
+    .main-btn:hover {
+      background: #1d4ed8;
+      transform: scale(1.05);
+    }
+
+    /* Popup Iklan */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 999;
+      animation: popupShow 0.3s ease;
+    }
+
+    @keyframes popupShow {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .popup img {
+      width: 100%;
+      display: block;
+    }
+
+    .popup-content {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .close-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #ef4444;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .close-btn:hover {
+      background: #dc2626;
+    }
+
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 998;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="main-btn" onclick="openRedirect()">click here</button>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="popup" id="popup">
+    <button class="popup-close" onclick="closePopup()">×</button>
+
+    <!-- Ganti gambar popup di bawah ini -->
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5TrdwLeWwCdTeQ3gUXwmqH53VIVR8YMHBJA&s" alt="Popup Iklan">
+  </div>
+
+  <script>
+    function openRedirect() {
+      // Redirect ke Google Account
+      window.open('https://myaccount.google.com/', '_blank');
+
+      // Popup iklan muncul setelah klik
+      setTimeout(() => {
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+      }, 500);
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
