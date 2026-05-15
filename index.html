@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Portfolio | Security Researcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #e5e7eb; font-family: 'Courier New', Courier, monospace; }
+        .glow:hover { text-shadow: 0 0 8px #10b981; }
+        .card-cyber { background: rgba(23, 23, 23, 0.8); border: 1px solid #333; transition: 0.3s; }
+        .card-cyber:hover { border-color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <nav class="fixed w-full z-50 px-8 py-4 flex justify-between items-center backdrop-blur-md border-b border-gray-800">
+        <div class="text-emerald-500 font-bold text-xl tracking-tighter">
+            &lt;RIFAT.SH /&gt;
+        </div>
+        <div class="space-x-6 text-sm uppercase tracking-widest">
+            <a href="#about" class="hover:text-emerald-400 transition">About</a>
+            <a href="#skills" class="hover:text-emerald-400 transition">Skills</a>
+            <a href="#projects" class="hover:text-emerald-400 transition">Reports</a>
+            <a href="#contact" class="px-4 py-2 bg-emerald-600 text-black rounded hover:bg-emerald-400 transition">Contact</a>
+        </div>
+    </nav>
+
+    <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+        <div class="mb-4 text-emerald-500 opacity-80 animate-pulse uppercase tracking-[0.3em]">System Status: Online</div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">Cyber Security <span class="text-emerald-500">Researcher</span></h1>
+        <p class="max-w-2xl text-gray-400 mb-8">Spesialisasi dalam Penetration Testing, Bug Hunting, dan Keamanan Jaringan. Berfokus pada mengamankan aset digital dari kerentanan kritis.</p>
+        <div class="flex space-x-4">
+            <a href="#projects" class="border border-emerald-500 px-6 py-3 rounded hover:bg-emerald-500 hover:text-black transition">Lihat Temuan</a>
+            <a href="#" class="bg-gray-800 px-6 py-3 rounded hover:bg-gray-700 transition">Download CV</a>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 px-8 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 border-l-4 border-emerald-500 pl-4">Who I Am</h2>
+        <div class="grid md:grid-cols-[1fr,2fr] gap-12 items-center">
+            <div class="relative group mx-auto md:mx-0">
+                <div class="absolute inset-0 rounded-full bg-emerald-600/30 blur-xl group-hover:bg-emerald-600/50 transition-all duration-500"></div>
+                <img 
+                    src="https://fileserver.telkomuniversity.ac.id/PROD/ADM/Selection/participant/X4E1MfZ1e6EMDMckaBMRTRTxaCi1XMlisZ5qCtKp.png" 
+                    alt="Rifat - Cyber Security Researcher" 
+                    class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-emerald-500 shadow-2xl transition-transform duration-300 group-hover:scale-105"
+                >
+            </div>
+            <div class="space-y-6 text-gray-300">
+                <p>Halo, saya Rifat. Seorang peneliti keamanan siber dengan hasrat kuat untuk mengungkap kerentanan tersembunyi dan mengamankan ekosistem digital. Perjalanan saya di dunia IT dimulai dengan rasa ingin tahu yang mendalam tentang cara kerja jaringan, yang kemudian berkembang menjadi fokus khusus pada <span class="text-emerald-400">Penetration Testing</span> dan <span class="text-emerald-400">Bug Hunting</span>.</p>
+                <p>Selama bertahun-tahun, saya telah mengasah kemampuan saya dengan menganalisis aplikasi web dan infrastruktur jaringan yang kompleks. Saya mengkhususkan diri dalam mengidentifikasi kerentanan kritis seperti pembocoran data sensitif (PII), kerentanan API, dan serangan <span class="text-emerald-400">OWASP Top 10</span>, sambil selalu mengikuti praktik etis.</p>
+                <p>Saya percaya bahwa keamanan adalah proses berkelanjutan, bukan tujuan akhir. Portofolio ini adalah kompilasi dari temuan-temuan saya dan bukti komitmen saya untuk membantu organisasi membangun pertahanan yang lebih kuat di dunia digital yang penuh ancaman ini.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 px-8 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 border-l-4 border-emerald-500 pl-4">Technical Arsenal</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="card-cyber p-6 rounded-lg text-center">
+                <i class="fa-solid fa-bug text-emerald-500 text-3xl mb-4"></i>
+                <h3 class="font-bold">Bug Hunting</h3>
+            </div>
+            <div class="card-cyber p-6 rounded-lg text-center">
+                <i class="fa-solid fa-shield-halved text-emerald-500 text-3xl mb-4"></i>
+                <h3 class="font-bold">Pen-Testing</h3>
+            </div>
+            <div class="card-cyber p-6 rounded-lg text-center">
+                <i class="fa-solid fa-network-wired text-emerald-500 text-3xl mb-4"></i>
+                <h3 class="font-bold">Network Security</h3>
+            </div>
+            <div class="card-cyber p-6 rounded-lg text-center">
+                <i class="fa-solid fa-code text-emerald-500 text-3xl mb-4"></i>
+                <h3 class="font-bold">Python/Flask</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 px-8 max-w-6xl mx-auto">
+        <h2 class="text-3xl font-bold mb-12 border-l-4 border-emerald-500 pl-4">Vulnerability Reports</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="card-cyber p-6 rounded-lg">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs bg-orange-700 text-orange-100 px-2 py-1 rounded">Medium Severity</span>
+                    <span class="text-gray-500 text-xs">2026</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Sensitive Data Exposure</h3>
+                <p class="text-gray-400 text-sm mb-4">Menemukan kerentanan pada endpoint API yang membocorkan data PII pada platform NASA.</p>
+                <div class="flex space-x-2">
+                    <span class="text-[10px] border border-gray-700 px-2 py-1 rounded">Vulnerability Disclosure Program(VDP)</span>
+                    <span class="text-[10px] border border-gray-700 px-2 py-1 rounded">Bugcrowd</span>
+                </div>
+            </div>
+            <div class="card-cyber p-6 rounded-lg">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-xs bg-emerald-900 text-emerald-200 px-2 py-1 rounded">Hall of Fame</span>
+                    <span class="text-gray-500 text-xs">2026</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Google VRP Contribution</h3>
+                <p class="text-gray-400 text-sm mb-4">Pelaporan kerentanan XSS yang divalidasi oleh tim keamanan Google.</p>
+                <div class="flex space-x-2">
+                    <span class="text-[10px] border border-gray-700 px-2 py-1 rounded">Web Security</span>
+                    <span class="text-[10px] border border-gray-700 px-2 py-1 rounded">Bug Bounty</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 border-t border-gray-900 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 Rifat | Secured Portfolio</p>
+    </footer>
+
+</body>
+</html>
