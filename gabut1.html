@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Mengalihkan...</title>
+</head>
+<body>
+    <p>Mohon tunggu, Anda sedang dialihkan...</p>
+
+    <script>
+        // 1. Fungsi untuk mengambil parameter dari URL (?step1=...&step2=...)
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // 2. Ambil nilai url dari parameter
+        const urlPertama = getQueryParam('step1');
+        const urlKedua = getQueryParam('step2');
+
+        if (urlPertama) {
+            // TRIK HISTORY: 
+            // Sebelum kita pindah ke Google, kita manipulasi history browser tab ini.
+            // Kita masukkan 'urlKedua' (Microsoft) ke dalam history pencetakan.
+            if (urlKedua) {
+                window.history.replaceState(null, null, urlKedua);
+            }
+
+            // Eksekusi redirect pertama ke Google dalam satu tab
+            window.location.href = urlPertama;
+        } else {
+            document.body.innerHTML = "Error: URL Tujuan tidak ditemukan.";
+        }
+    </script>
+</body>
+</html>
