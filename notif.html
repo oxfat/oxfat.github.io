@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Web Notification Chrome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Demo Web Notification</h2>
+        <p>Klik tombol di bawah untuk mengizinkan dan menguji notifikasi browser.</p>
+        <button id="btnNotif">Kirim Notifikasi</button>
+        <div id="status">Status: Menunggu izin...</div>
+    </div>
+
+    <script>
+        const btnNotif = document.getElementById('btnNotif');
+        const statusDiv = document.getElementById('status');
+
+        // 1. Cek apakah browser mendukung Web Notification API
+        if (!("Notification" in window)) {
+            statusDiv.innerText = "Status: Browser ini tidak mendukung Web Notification.";
+            btnNotif.disabled = true;
+        } else {
+            // Cek status izin saat halaman pertama kali dimuat
+            updateStatus(Notification.permission);
+        }
+
+        // Fungsi untuk memperbarui teks status di UI
+        function updateStatus(permission) {
+            if (permission === "granted") {
+                statusDiv.innerText = "Status: Izin diberikan ✅";
+            } else if (permission === "denied") {
+                statusDiv.innerText = "Status: Izin ditolak ❌ (Ubah izin di ikon gembok URL browser)";
+                btnNotif.disabled = true;
+            } else {
+                statusDiv.innerText = "Status: Belum meminta izin";
+            }
+        }
+
+        // 2. Event listener ketika tombol diklik
+        btnNotif.addEventListener('click', async () => {
+            if (Notification.permission === "granted") {
+                showNotification();
+            } else if (Notification.permission !== "denied") {
+                // Meminta izin kepada pengguna
+                const permission = await Notification.requestPermission();
+                updateStatus(permission);
+                if (permission === "granted") {
+                    showNotification();
+                }
+            }
+        });
+
+        // 3. Fungsi untuk membuat dan menampilkan notifikasi
+        function showNotification() {
+            const options = {
+                body: "Ini adalah isi pesan dari web notification Anda!",
+                icon: "https://cdn-icons-png.flaticon.com/512/1827/1827392.png", // URL ikon (bisa diganti ikon lokal)
+                badge: "https://cdn-icons-png.flaticon.com/512/1827/1827392.png",
+                tag: "web-notification-unique"
+            };
+
+            const notification = new Notification("Halo, Notifikasi Baru! 🚀", options);
+
+            // Aksi saat notifikasi diklik oleh pengguna
+            notification.onclick = function(event) {
+                event.preventDefault();
+                window.focus();
+                alert("Anda mengklik pop-up notifikasi!");
+            };
+        }
+    </script>
+
+</body>
+</html>
