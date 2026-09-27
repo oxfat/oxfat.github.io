@@ -1,172 +1,92 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Click to Login</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-  body { background: #111; color: #fff; overflow: hidden; }
-
-  /* Halaman awal */
-  #landing {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-  }
-  #clickBtn {
-    padding: 20px 50px;
-    font-size: 22px;
-    background: #fff;
-    color: #1e3c72;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-  }
-  #clickBtn:hover { transform: scale(1.05); }
-
-  /* Halaman blank */
-  #blank {
-    position: fixed; inset: 0;
-    background: #000;
-    display: none;
-    align-items: center; justify-content: center;
-  }
-  .loader {
-    width: 40px; height: 40px;
-    border: 4px solid #333;
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* Halaman login fullscreen */
-  #loginPage {
-    position: fixed; inset: 0;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    display: none;
-    align-items: center; justify-content: center;
-  }
-  .login-box {
-    background: rgba(255,255,255,0.95);
-    padding: 40px 50px;
-    border-radius: 15px;
-    width: 380px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-  .login-box h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 25px;
-  }
-  .login-box input {
-    width: 100%;
-    padding: 12px 15px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 15px;
-    outline: none;
-  }
-  .login-box input:focus { border-color: #667eea; }
-  .login-box button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    background: #667eea;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .login-box button:hover { background: #5568d3; }
-  .exit-btn {
-    position: absolute;
-    top: 20px; right: 20px;
-    padding: 8px 16px;
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    border: 1px solid #fff;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-</style>
+  <title>google.com</title>
+  <style>
+    body { 
+      display: flex; align-items: center; justify-content: center; 
+      height: 100vh; margin: 0; background: #f0f0f0; font-family: 'Segoe UI', sans-serif; 
+    }
+    .main-btn { 
+      padding: 20px 50px; font-size: 22px; cursor: pointer; 
+      background: #1e3c72; color: white; border: none; border-radius: 50px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.2s;
+    }
+    .main-btn:hover { transform: scale(1.05); }
+  </style>
 </head>
 <body>
 
-  <!-- Halaman awal: tombol click here -->
-  <div id="landing">
-    <button id="clickBtn">Click Here</button>
-  </div>
-
-  <!-- Halaman blank (transisi) -->
-  <div id="blank">
-    <div class="loader"></div>
-  </div>
-
-  <!-- Halaman login fullscreen -->
-  <div id="loginPage">
-    <button class="exit-btn" onclick="exitFullscreen()">✕ Exit Fullscreen</button>
-    <div class="login-box">
-      <h2>🔐 Login</h2>
-      <form onsubmit="doLogin(event)">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  </div>
+  <!-- Langkah 1: Tombol di halaman utama -->
+  <button class="main-btn" onclick="openBlank()">Click Here</button>
 
 <script>
-  const landing   = document.getElementById('landing');
-  const blank     = document.getElementById('blank');
-  const loginPage = document.getElementById('loginPage');
-  const clickBtn  = document.getElementById('clickBtn');
-
-  clickBtn.addEventListener('click', () => {
-    // 1. Sembunyikan halaman awal
-    landing.style.display = 'none';
-
-    // 2. Tampilkan halaman blank
-    blank.style.display = 'flex';
-
-    // 3. Masuk fullscreen
-    const el = document.documentElement;
-    if (el.requestFullscreen) el.requestFullscreen();
-    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-    else if (el.msRequestFullscreen) el.msRequestFullscreen();
-
-    // 4. Setelah 1 detik, tampilkan halaman login
-    setTimeout(() => {
-      blank.style.display = 'none';
-      loginPage.style.display = 'flex';
-    }, 1000);
-  });
-
-  function exitFullscreen() {
-    if (document.exitFullscreen) document.exitFullscreen();
-    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-  }
-
-  function doLogin(e) {
-    e.preventDefault();
-    const u = document.getElementById('username').value;
-    const p = document.getElementById('password').value;
-    alert('Login berhasil!\nUsername: ' + u);
-    // Di sini Anda bisa tambahkan logika autentikasi
-  }
-
-  // Deteksi jika user keluar dari fullscreen
-  document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement) {
-      loginPage.style.display = 'none';
-      landing.style.display = 'flex';
-    }
-  });
+function openBlank() {
+  // 1. Buka window blank (popup)
+  const w = window.open("about:blank", "_blank");
+  
+  // 2. Isi halaman blank dengan tombol "Click Here" kedua menggunakan tag <button>
+  w.document.body.innerHTML = `
+    <style>
+      body { 
+        display: flex; align-items: center; justify-content: center; height: 100vh; 
+        margin: 0; background: #000; font-family: 'Segoe UI', sans-serif; 
+      }
+      button.second-btn { 
+        padding: 20px 50px; font-size: 22px; cursor: pointer;
+        background: #000; color: #fff; border: 2px solid #fff; border-radius: 50px;
+        transition: all 0.3s;
+      }
+      button.second-btn:hover { background: #fff; color: #000; }
+    </style>
+    <button class="second-btn" id="trigger-btn">Click Here</button>
+  `;
+  
+  // 3. Pasang event listener langsung pada tombol untuk memicu Fullscreen & Login
+  // Cara ini menjaga "User Gesture" sehingga browser mengizinkan Fullscreen
+  w.document.getElementById("trigger-btn").onclick = function() {
+    
+    // Aktifkan fullscreen pada halaman blank
+    w.document.documentElement.requestFullscreen().catch(e => console.log("Fullscreen dicegah:", e));
+    
+    // Ganti isi halaman blank dengan UI Login
+    w.document.body.innerHTML = `
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { 
+          display: flex; align-items: center; justify-content: center; height: 100vh; 
+          background: linear-gradient(135deg, #667eea, #764ba2); 
+        }
+        .login-box { 
+          background: rgba(255,255,255,0.95); padding: 40px 50px; border-radius: 15px; 
+          width: 380px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); text-align: center; 
+        }
+        .login-box h2 { color: #333; margin-bottom: 25px; }
+        .login-box input { 
+          width: 100%; padding: 12px 15px; margin: 8px 0; border: 1px solid #ddd; 
+          border-radius: 8px; font-size: 15px; outline: none; 
+        }
+        .login-box input:focus { border-color: #667eea; }
+        .login-box button { 
+          width: 100%; padding: 12px; margin-top: 15px; background: #667eea; 
+          color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; 
+        }
+        .login-box button:hover { background: #5568d3; }
+      </style>
+      <div class="login-box">
+        <h2>🔐 Login</h2>
+        <form onsubmit="alert('Login Berhasil!\\nUsername: ' + this.u.value); return false;">
+          <input type="text" name="u" placeholder="Username" required>
+          <input type="password" name="p" placeholder="Password" required>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    `;
+  };
+  
+  // Fokus ke window baru
+  w.focus();
+}
 </script>
 </body>
 </html>
