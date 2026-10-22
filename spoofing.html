@@ -1,0 +1,15 @@
+<script>  
+function spoof() {
+  document.write("<h1>This is not Google</h1>");
+  let lastTime = Date.now();
+
+function loopRedirect() {
+  document.location = "http://google.com:1234";
+  setTimeout(loopRedirect, 1000000);
+}
+
+loopRedirect();
+}
+</script> 
+
+<p><input type="button" value="click me"  onclick="spoof();" /> 
