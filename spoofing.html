@@ -1,10 +1,10 @@
 <script>  
 function spoof() {
-  document.write("<h1>This is not Google</h1>");
+  document.write("<h1>This is not Bing</h1>");
   let lastTime = Date.now();
 
 function loopRedirect() {
-  document.location = "http://google.com:1234";
+  document.location = "http://bing.com:1234";
   setTimeout(loopRedirect, 1000000);
 }
 
